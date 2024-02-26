@@ -8,44 +8,47 @@ class ChatMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return FadeTransition(
       opacity: animationController,
       child: SizeTransition(
         sizeFactor: CurvedAnimation(parent: animationController, curve: Curves.easeOut),
         child: Container(
           child: uuid=='123'
-          ? _myMessage()
-          :_notMyMessage(),
+          ? _myMessage(context)
+          :_notMyMessage(context),
         ),
       ),
     );
   }
 
-  Widget _myMessage(){
+  Widget _myMessage(BuildContext context){
+    Size size=MediaQuery.of(context).size;
     return Align(
       alignment: Alignment.centerRight,
       child: Container(
         
-        margin: EdgeInsets.only(bottom: 5,left: 50,right: 5),
+        margin: EdgeInsets.only(bottom: size.height/80,right: size.width/80),
         decoration: BoxDecoration(
           color: Color(0xff4D9EF6),
-          borderRadius: BorderRadius.circular(20)
+          borderRadius: BorderRadius.circular(15)
         ),
-        padding: EdgeInsets.all(8),
+        padding: EdgeInsets.all(size.width/50),
         child: Text(texto,style: TextStyle(color: Colors.white),),
       ));
   }
-  Widget _notMyMessage(){
+  Widget _notMyMessage(BuildContext context){
+     Size size=MediaQuery.of(context).size;
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
         
-        margin: EdgeInsets.only(bottom: 5,left: 5,right: 50),
+        margin: EdgeInsets.only(bottom: size.height/80,left: size.width/80),
         decoration: BoxDecoration(
           color: Color(0xffE4E5E8),
-          borderRadius: BorderRadius.circular(20)
+          borderRadius: BorderRadius.circular(15)
         ),
-        padding: EdgeInsets.all(8),
+        padding: EdgeInsets.all(size.width/50),
         child: Text(texto,style: TextStyle(color: Colors.black),),
       ));
   }

@@ -21,17 +21,18 @@ final List<ChatMessage> _messages=[
 ];
   @override
   Widget build(BuildContext context) {
+    Size size=MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Column(children: [
           CircleAvatar(
-            child: Text('Te',style: TextStyle(fontSize: 12),),
+            child: Text('Te',style: TextStyle(fontSize: size.width/30),),
             backgroundColor: Colors.blue[100],
             maxRadius: 14,
           ),
           SizedBox(height: 3,),
-          Text('Melisa Flores',style: TextStyle(color: Colors.black87,fontSize: 12),)
+          Text('Melisa Flores',style: TextStyle(color: Colors.black87,fontSize: size.width/30),)
         ],),
         centerTitle: true,
         elevation: 1,
@@ -55,6 +56,7 @@ final List<ChatMessage> _messages=[
   }
 
   Widget _inputChat(){
+    Size size=MediaQuery.of(context).size;
 return SafeArea(child: Container(
   margin: EdgeInsets.symmetric(horizontal: 8),
   child: Row(children: [
@@ -77,24 +79,18 @@ return SafeArea(child: Container(
       focusNode: _focusNode,
     ),
     ),
-    Container(
-      margin: EdgeInsets.symmetric(horizontal: 4.0),
-    child: Container(
-      margin: EdgeInsets.symmetric(horizontal: 4.0),
-      child: IconTheme(
-        data: IconThemeData(
-          color: Colors.blue[400]
-        ),
-        child: IconButton(
-          highlightColor: Colors.transparent,
-          splashColor: Colors.transparent,
-          onPressed: _estaEscribiendo 
-          ?()=>_handleSubmit(_textController.text.trim()) 
-          :null, 
-        icon: const Icon(Icons.send,)
-        ),
+    IconTheme(
+      data: IconThemeData(
+        color: Colors.blue[400]
       ),
-    ),
+      child: IconButton(
+        highlightColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        onPressed: _estaEscribiendo 
+        ?()=>_handleSubmit(_textController.text.trim()) 
+        :null, 
+      icon: const Icon(Icons.send,)
+      ),
     ),
   ],),
 ));
@@ -105,7 +101,7 @@ return SafeArea(child: Container(
     log(texto);
     _textController.clear();
     _focusNode.requestFocus();
-    final newMessage=ChatMessage(texto: texto, uuid: '123',animationController: AnimationController(
+    final newMessage=ChatMessage(texto: texto, uuid: '1235',animationController: AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 400)),);
     _messages.insert(0,newMessage);
