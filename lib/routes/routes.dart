@@ -9,7 +9,7 @@ import '../pages/login_page.dart';
 
 final Map<String, Widget Function(BuildContext)> appRoutes={
   '/usuarios':(_)=>  const UsuariosPage(),
-  '/chat':(_)=>  const ChatPage(),
+  '/chat':(_)=>   ChatPage(),
   '/login':(_)=>  const LoginPage(),
   '/register':(_)=>  const RegisterPage(),
   '/loading':(_)=>  const LoadingPage(),

@@ -36,6 +36,7 @@ class RegisterPage extends StatelessWidget {
 
 class _FormState extends State<_FormRegister> {
   TextEditingController emailController= TextEditingController();
+  TextEditingController nameController= TextEditingController();
   TextEditingController passController= TextEditingController();
     @override
     Widget build(BuildContext context) {
@@ -44,8 +45,8 @@ class _FormState extends State<_FormRegister> {
         padding: EdgeInsets.symmetric(horizontal: size.height/30),
         margin: EdgeInsets.only(top: size.height/20),
         child: Column(children: [
-          CustomInput(icon: Icons.account_box,placeholder: 'Nombre',textController: emailController,keyboardType: TextInputType.emailAddress,),
-          CustomInput(icon: Icons.mail_outline,placeholder: 'Correo',textController: passController,),
+          CustomInput(icon: Icons.account_box,placeholder: 'Nombre',textController: nameController,keyboardType: TextInputType.emailAddress,),
+          CustomInput(icon: Icons.mail_outline,placeholder: 'Correo',textController: emailController,),
           CustomInput(icon: Icons.lock_outline,placeholder: 'Contraseña',textController: passController,isPassword: true,),
           IngresarButton(textButton: 'Registrar',onPress: (){}),
       ],),
