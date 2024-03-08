@@ -1,5 +1,8 @@
+import 'package:chat/helpers/mostrar_alerta.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../services/auth_service.dart';
 import '../widgets/custom_input.dart';
 import '../widgets/footer.dart';
 import '../widgets/ingresar_button.dart';
@@ -41,6 +44,7 @@ class _FormState extends State<_FormRegister> {
     @override
     Widget build(BuildContext context) {
       Size size=MediaQuery.of(context).size;
+       final authService=Provider.of<AuthService>(context);
       return Container(
         padding: EdgeInsets.symmetric(horizontal: size.height/30),
         margin: EdgeInsets.only(top: size.height/20),
@@ -48,7 +52,14 @@ class _FormState extends State<_FormRegister> {
           CustomInput(icon: Icons.account_box,placeholder: 'Nombre',textController: nameController,keyboardType: TextInputType.emailAddress,),
           CustomInput(icon: Icons.mail_outline,placeholder: 'Correo',textController: emailController,),
           CustomInput(icon: Icons.lock_outline,placeholder: 'Contraseña',textController: passController,isPassword: true,),
-          IngresarButton(textButton: 'Registrar',onPress: (){}),
+          IngresarButton(textButton: 'Registrar',onPress:authService.autenticando ?null:()async{
+           final registerOK= await authService.register(nameController.text.trim(), emailController.text.trim(), passController.text.trim());
+           if(registerOK==true){
+            Navigator.pushReplacementNamed(context, '/usuarios');
+           }else{
+            mostrarAlerta(context, 'Registro Incorrecto', registerOK);
+           }
+          }),
       ],),
       );
     }

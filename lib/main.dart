@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:chat/routes/routes.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
+import 'services/auth_service.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -19,11 +22,16 @@ class MyApp extends StatelessWidget {
       statusBarIconBrightness: Brightness
           .dark, // Para cambiar el color de los iconos (blanco o negro)
     ));
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Chat App',
-      initialRoute: '/chat',
-      routes: appRoutes,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) =>AuthService())
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Chat App',
+        initialRoute: '/loading',
+        routes: appRoutes,
+      ),
     );
   }
 }

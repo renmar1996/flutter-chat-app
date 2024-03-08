@@ -1,5 +1,10 @@
-import 'package:flutter/material.dart';
+import 'dart:developer';
 
+import 'package:chat/services/auth_service.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../helpers/mostrar_alerta.dart';
 import '../widgets/custom_input.dart';
 import '../widgets/footer.dart';
 import '../widgets/ingresar_button.dart';
@@ -44,13 +49,27 @@ class _FormState extends State<_Form> {
     @override
     Widget build(BuildContext context) {
       Size size=MediaQuery.of(context).size;
+      final authService=Provider.of<AuthService>(context);
       return Container(
         padding: EdgeInsets.symmetric(horizontal: size.height/30),
         margin: EdgeInsets.only(top: size.height/20),
         child: Column(children: [
           CustomInput(icon: Icons.mail_outline,placeholder: 'Correo',textController: emailController,keyboardType: TextInputType.emailAddress,),
           CustomInput(icon: Icons.lock_outline,placeholder: 'Contraseña',textController: passController,isPassword: true,),
-          IngresarButton(textButton: 'Ingresar',onPress: (){ }),
+          IngresarButton(textButton: 'Ingresar',onPress:authService.autenticando?null:()async{
+            log(emailController.text);
+            log(passController.text);
+           FocusScope.of(context).unfocus();
+           final loginOk=await authService.login(emailController.text.trim(), passController.text.trim());
+           if(loginOk){
+            //TODO> Conectar a nuestro socket server
+            //TODO:Navegar a otra pantalla
+            Navigator.pushReplacementNamed(context, '/usuarios');
+           }else{
+            //TODO: Mostrar alert
+            mostrarAlerta(context,'Login Incorrecto','Revise sus credenciales nuevamente');
+           }
+           }),
       ],),
       );
     }
