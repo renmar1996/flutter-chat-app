@@ -96,6 +96,8 @@ log(resp.body);
 }
 
 Future<bool> isLoggedIn()async{
+  if(await _storage.containsKey(key: 'token')){
+
   final token=await _storage.read(key: 'token');
 final resp=await http.get(Uri.parse('${Enviroment.apiUrl}/login/renewToken'),
 headers: {
@@ -112,6 +114,9 @@ headers: {
   logout();
   return false;
 }
+  }else{
+    return false;
+  }
 }
 
   Future guardarToken(String token)async{

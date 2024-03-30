@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../services/auth_service.dart';
+import '../services/socket_service.dart';
 import '../widgets/custom_input.dart';
 import '../widgets/footer.dart';
 import '../widgets/ingresar_button.dart';
@@ -45,6 +46,7 @@ class _FormState extends State<_FormRegister> {
     Widget build(BuildContext context) {
       Size size=MediaQuery.of(context).size;
        final authService=Provider.of<AuthService>(context);
+       final socketService=Provider.of<SocketProvider>(context);
       return Container(
         padding: EdgeInsets.symmetric(horizontal: size.height/30),
         margin: EdgeInsets.only(top: size.height/20),
@@ -55,6 +57,7 @@ class _FormState extends State<_FormRegister> {
           IngresarButton(textButton: 'Registrar',onPress:authService.autenticando ?null:()async{
            final registerOK= await authService.register(nameController.text.trim(), emailController.text.trim(), passController.text.trim());
            if(registerOK==true){
+            socketService.connect();
             Navigator.pushReplacementNamed(context, '/usuarios');
            }else{
             mostrarAlerta(context, 'Registro Incorrecto', registerOK);
